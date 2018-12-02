@@ -55,13 +55,18 @@ class JFile():
         i_strike=2
         i_abs_expiries+=1
         i_rel_expiries=1
-
+        rel_vol_surface=[]
         while index_sheet.cell_value( i_abs_expiries, i_strike)!='':
             rel_strikes.append(index_sheet.cell_value( i_abs_expiries, i_strike))
             i_strike+=1
         i_abs_expiries+=1
         while has_cell( index_sheet, i_abs_expiries,0 ):
             rel_expiries.append(index_sheet.cell_value( i_abs_expiries, 0))
+            vol_line=[]
+            # if has_cell( index_sheet, i_abs_expiries,0 ):
+            for i in range(1,i_strike):
+                vol_line.append(index_sheet.cell_value(i_abs_expiries, i))
+            rel_vol_surface.append(vol_line)
             i_abs_expiries+=1
 
         self.results[index_name]={'spot': spot,
@@ -69,7 +74,8 @@ class JFile():
                                   'abs_expiries': abs_expiries,
                                   'abs_vol_surface':abs_vol_surface,
                                   'rel_strikes': rel_strikes,
-                                  'rel_expiries': rel_expiries}
+                                  'rel_expiries': rel_expiries,
+                                  'rel_vol_surface':rel_vol_surface}
 
 
     def add_comment(self, comment, criticity='info'):

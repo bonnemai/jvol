@@ -1,4 +1,4 @@
-import xlrd
+# import xlrd
 # from JException import JException
 from xlrd import open_workbook
 import logging
@@ -54,7 +54,7 @@ class JFile():
 
         i_strike=2
         i_abs_expiries+=1
-        i_rel_expiries=1
+        # i_rel_expiries=1
         rel_vol_surface=[]
         while index_sheet.cell_value( i_abs_expiries, i_strike)!='':
             rel_strikes.append(index_sheet.cell_value( i_abs_expiries, i_strike))

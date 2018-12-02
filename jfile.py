@@ -21,7 +21,9 @@ class JFile():
     def __init__(self, is_today=True, region='APAC', date_str=None, path=r'./resources/J_Vol.xlsx', indices=['NKY', 'KOSPI2', 'HSCEI', 'HSI']):
         if path is None:
             if region=='DEV':
-                path=r'./test/resources/J_Vol.xlsx'
+                self.path=r'./test/resources/J_Vol.xlsx'
+        else:
+            self.path=path
         self.results={}
         self.comments=[]
         # TODO: find files, get the latest, add a comment...
@@ -54,7 +56,6 @@ class JFile():
 
             i_strike=2
             i_abs_expiries+=1
-            # i_rel_expiries=1
             rel_vol_surface=[]
             while index_sheet.cell_value( i_abs_expiries, i_strike)!='':
                 rel_strikes.append(index_sheet.cell_value( i_abs_expiries, i_strike))
@@ -63,7 +64,6 @@ class JFile():
             while has_cell( index_sheet, i_abs_expiries,0 ):
                 rel_expiries.append(index_sheet.cell_value( i_abs_expiries, 0))
                 vol_line=[]
-                # if has_cell( index_sheet, i_abs_expiries,0 ):
                 for i in range(1,i_strike):
                     vol_line.append(index_sheet.cell_value(i_abs_expiries, i))
                 rel_vol_surface.append(vol_line)
@@ -83,7 +83,9 @@ class JFile():
         i_strike=vol_surface['strikes'].index(strike)
         return vol_surface['vol_surface'][i_expiry][i_strike]
 
+    def get_spot(self, index_name='NKY'):
+        return self.results[index_name]['spot']
+
     def add_comment(self, comment, criticity='info'):
-        # print(self.comments.a)
         self.comments.append({'comment': comment, criticity:criticity})
 
